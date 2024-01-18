@@ -4,3 +4,6 @@ services:
     ports:
       - "3000:3000"
     image: "bible-beasts:latest"
+    environment:
+      - NEW_RELIC_LICENSE_KEY=7c82a2c9ed8d4c04434d26992065ce35FFFFNRAL
+      - NEW_RELIC_APP_NAME="bible_beasts"

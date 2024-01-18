@@ -4,6 +4,11 @@ FROM node:18-alpine
 # Add the time to the build
 RUN date -u +"%Y-%m-%dT%H:%M:%SZ" > /build-time.txt
 
+# This line allows the agent to run without a configuration file.
+ENV NEW_RELIC_NO_CONFIG_FILE=true \
+NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true \
+NEW_RELIC_LOG=stdout
+
 # Set the working directory to /app
 WORKDIR /app
 
