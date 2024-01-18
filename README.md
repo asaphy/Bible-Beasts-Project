@@ -76,7 +76,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 12. Click `Run Task` from the `Deploy` dropdown on the top right
 13. Under `Networking` select the `bible_beasts` security group to enable access to port 3000
 14. Click into the task and under `Configuration` click on the Public IP link to access the webapp serve from AWS
-15. Verify that the change is up: https://35.173.213.238:3000/
+15. Verify that the change is up: http://35.173.213.238:3000/
 
 ## Subsequent Deploys
 
