@@ -58,3 +58,36 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+# Deploying to AWS
+
+## First Time Deploy
+1. Build docker image with latest changes: `docker build -t bible-beasts:latest .`
+2. Test locally using `docker compose up`
+3. Install AWS CLI
+4. Have the owner of the ECR resource provide a user account with `AmazonEC2ContainerRegistryFullAccess` perms
+5. In command line, type `aws configure` to set up an AWS connection
+6. Get the repository URI from AWS. Should looks something like: `<id>.dkr.ecr.us-east-1.amazonaws.com/bible-beasts-project`
+7. Tag image: `docker tag bible-beasts:latest <id>.dkr.ecr.us-east-1.amazonaws.com/bible-beasts-project`
+8. Login to AWS: `aws ecr get-login-password | docker login --username AWS --password-stdin <id>.dkr.ecr.us-east-1.amazonaws.com`
+9. Push tagged Docker image to AWS `docker push <id>.dkr.ecr.us-east-1.amazonaws.com/bible-beasts-project`
+10. Verify image is pushed: https://us-east-1.console.aws.amazon.com/ecr/private-registry/repositories?region=us-east-1
+11. In AWS go to the `Task Definitions` page (navigate from the search bar at the top of the page)
+12. Click `Run Task` from the `Deploy` dropdown on the top right
+13. Under `Networking` select the `bible_beasts` security group to enable access to port 3000
+14. Click into the task and under `Configuration` click on the Public IP link to access the webapp serve from AWS
+15. Verify that the change is up: https://35.173.213.238:3000/
+
+## Subsequent Deploys
+
+ 1. `docker build -t bible-beasts .`
+ 2. `docker compose up` 
+ 3. `docker images`
+ 4. `docker tag <new_image-id> <id>.dkr.ecr.us-east-1.amazonaws.com/bible-beasts-project`
+ 5. `docker push <id>.dkr.ecr.us-east-1.amazonaws.com/bible-beasts-project`
+ 6. In AWS go to the `Task Definitions` page (navigate from the search bar at the top of the page)
+ 7. Click `Run Task` from the `Deploy` dropdown on the top right
+ 8. Under `Networking` select the `bible_beasts` security group to enable access to port 3000
+ 9. Click into the task and under `Configuration` click on the Public IP link to access the webapp serve from AWS
+
+ 
